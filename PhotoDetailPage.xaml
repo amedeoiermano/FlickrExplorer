@@ -41,8 +41,8 @@
                 </ImageButton.Behaviors>
             </ImageButton>
         </Grid>
-        <ffImageLoading:CachedImage Grid.Row="0" Grid.RowSpan="2"  Source="{Binding Model.Url}" Aspect="AspectFit"  />
-
+        <ffImageLoading:CachedImage Grid.Row="0" Grid.RowSpan="2" Loaded="CachedImage_Loaded" Source="{Binding Model.Url}" Aspect="AspectFit"  />
+        <ActivityIndicator  Grid.Row="0" ZIndex="5" Grid.RowSpan="2" IsRunning="{Binding Model.PhotoLoading}" VerticalOptions="Center" HorizontalOptions="Center" />
         <VerticalStackLayout Grid.Row="1" VerticalOptions="End" Spacing="5" Margin="10" HorizontalOptions="Fill">
             <Label  VerticalOptions="End" FontAttributes="Bold" TextColor="#FAFAFA" Text="{Binding Model.Title}" FontSize="Medium" IsVisible="{Binding Model.Title, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"/>
             <ScrollView MaximumHeightRequest="150" VerticalOptions="End" IsVisible="{Binding Model.Description, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">

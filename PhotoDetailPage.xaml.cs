@@ -44,4 +44,9 @@ public partial class PhotoDetailPage : ContentPage
     {
         Model.SavePhoto();
     }
+
+    private void CachedImage_Loaded(object sender, EventArgs e)
+    {
+        Model.PhotoLoading = false;
+    }
 }
