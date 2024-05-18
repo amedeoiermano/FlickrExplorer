@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fpe="clr-namespace:FlickrExplorer"
+             xmlns:ffImageLoading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui"
+             xmlns:models="clr-namespace:FlickrExplorer.Models"
+             xmlns:resx="clr-namespace:FlickrExplorer.Resources.Strings"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="fpe:MainPage"
+             x:Class="FlickrExplorer.MainPage">
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource StatusBarColor}" StatusBarStyle="LightContent" />
+    </ContentPage.Behaviors>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <mct:IsStringNullOrEmptyConverter x:Key="IsStringNullOrEmptyConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto,*" RowSpacing="10" Margin="3,0">
+        <VerticalStackLayout Grid.Row="0" Spacing="15" Margin="10">
+            <Image Source="logo.svg" HorizontalOptions="Center" WidthRequest="100"/>
+            <Border Background="LightGray" StrokeShape="RoundRectangle 30" Padding="5">
+                <SearchBar Text="{Binding Model.Query}" TextColor="Black" Placeholder="{Static resx:Strings.SearchPlaceholder}" FontSize="20" />
+            </Border>
+        </VerticalStackLayout>
+        <ActivityIndicator x:Name="LoadingIndicator" Margin="10" Grid.Row="0"  IsVisible="{Binding Model.SearchInProgress}" IsRunning="{Binding Model.SearchInProgress}" HorizontalOptions="End" VerticalOptions="Start" />
+
+        <CollectionView  Scrolled="PhotoList_Scrolled" Grid.Row="1" SelectionMode="None"  ItemsSource="{Binding Model.Photos}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"  Span="3" HorizontalItemSpacing="3" VerticalItemSpacing="3" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="fpe:Photo">
+                    <ffImageLoading:CachedImage Source="{Binding Url}" LoadingPlaceholder="photo_placeholder.png" FadeAnimationEnabled="False" Aspect="AspectFill" DownsampleToViewSize="True" HeightRequest="{Binding Source={RelativeSource  Mode=FindAncestor, AncestorType={x:Type fpe:MainPage},AncestorLevel=1}, Path=PhotoHeight}" >
+                        <ffImageLoading:CachedImage.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OpenPhoto" CommandParameter="{Binding Id}"/>
+                        </ffImageLoading:CachedImage.GestureRecognizers>
+                    </ffImageLoading:CachedImage>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <VerticalStackLayout IsVisible="{Binding Model.Query, Converter={StaticResource IsStringNullOrEmptyConverter}}" Margin="50" Spacing="10" Grid.Row="1" >
+            <Image WidthRequest="150" Source="search.svg" HorizontalOptions="Center"/>
+            <Label Text="{Static resx:Strings.SearchPrompt}" HorizontalOptions="Center" FontSize="Body" HorizontalTextAlignment="Center"/>
+        </VerticalStackLayout>     
+        <VerticalStackLayout IsVisible="{Binding Model.NoResults}" Margin="50" Spacing="10" Grid.Row="1" >
+            <Image WidthRequest="150" Source="empty.svg" HorizontalOptions="Center"/>
+            <Label Text="{Static resx:Strings.NoResults}" HorizontalOptions="Center" FontSize="Body" HorizontalTextAlignment="Center"/>
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>

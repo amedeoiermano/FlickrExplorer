@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FlickrExplorer.PhotoDetailPage"
+             xmlns:fpe="clr-namespace:FlickrExplorer"
+             xmlns:ffImageLoading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Compat.Maui"
+             xmlns:ffIlTransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Compat.Transformations"
+             xmlns:models="clr-namespace:FlickrExplorer.Models"
+             xmlns:converters="clr-namespace:FlickrExplorer.Converters"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="fpe:PhotoDetailPage"
+             Title="PhotoDetailPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ListIsNotEmptyToBoolConverter x:Key="ListIsNotEmptyToBoolConverter"/>
+            <mct:IsNotNullConverter x:Key="IsNotNullConverter"/>
+            <mct:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto,*" BackgroundColor="Black">
+        <Grid Grid.Row="0" ColumnDefinitions="35, *, 35" Margin="10" ColumnSpacing="15" ZIndex="5">
+            <ImageButton Grid.Column="0" HeightRequest="35" WidthRequest="35" Source="back.svg" Clicked="Back" VerticalOptions="Center">
+                <ImageButton.Behaviors>
+                    <mct:IconTintColorBehavior TintColor="White"/>
+                </ImageButton.Behaviors>
+            </ImageButton>
+            <HorizontalStackLayout  Grid.Column="1" Spacing="10">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer CommandParameter="{Binding Model.Owner}" Tapped="ShowUserGallery"/>
+                </HorizontalStackLayout.GestureRecognizers>
+                <ffImageLoading:CachedImage  Source="{Binding Model.OwnerIconUrl}"  LoadingPlaceholder="user_placeholder.png" ErrorPlaceholder="user_placeholder.png" WidthRequest="40" HeightRequest="40" VerticalOptions="Start">
+                    <ffImageLoading:CachedImage.Transformations>
+                        <ffIlTransformations:CircleTransformation BorderSize="0"/>
+                    </ffImageLoading:CachedImage.Transformations>
+                </ffImageLoading:CachedImage>
+                <Label FontAttributes="Bold" Text="{Binding Model.OwnerUsername}" TextColor="White" FontSize="Small" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <ImageButton Grid.Column="2" HeightRequest="35" WidthRequest="35" Source="download.svg" Clicked="SavePhoto" VerticalOptions="Center">
+                <ImageButton.Behaviors>
+                    <mct:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
+                </ImageButton.Behaviors>
+            </ImageButton>
+        </Grid>
+        <ffImageLoading:CachedImage Grid.Row="0" Grid.RowSpan="2"  Source="{Binding Model.Url}" Aspect="AspectFit"  />
+
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="End" Spacing="5" Margin="10" HorizontalOptions="Fill">
+            <Label  VerticalOptions="End" FontAttributes="Bold" TextColor="#FAFAFA" Text="{Binding Model.Title}" FontSize="Medium" IsVisible="{Binding Model.Title, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"/>
+            <ScrollView MaximumHeightRequest="150" VerticalOptions="End" IsVisible="{Binding Model.Description, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
+                <Label  TextType="Html" TextColor="#FAFAFA" Text="{Binding Model.Description}"/>
+            </ScrollView>
+            <StackLayout MaximumHeightRequest="100" VerticalOptions="End">
+                <CollectionView ItemsSource="{Binding Model.Tags}" SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Horizontal" HorizontalItemSpacing="3" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="fpe:Tag">
+                            <Label Text="{Binding HashTag}" TextColor="LightGray" FontAttributes="Italic" FontSize="Small"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+            <Label  FontSize="Small" TextColor="Gray" Text="{Binding Model.UploadDate, StringFormat='{0:dd MMMM yyyy}'}" VerticalOptions="End"/>
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>
