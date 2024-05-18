@@ -18,7 +18,15 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto,*" BackgroundColor="Black">
-        <Grid Grid.Row="0" ColumnDefinitions="35, *, 35" Margin="10" ColumnSpacing="15" ZIndex="5">
+        <Grid Grid.Row="0" ColumnDefinitions="35, *, 35" ColumnSpacing="15" ZIndex="5" Padding="10">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0,1">
+                    <GradientStop Color="#88000000"
+                          Offset="0.1"  />
+                    <GradientStop Color="Transparent"
+                          Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
             <ImageButton Grid.Column="0" HeightRequest="35" WidthRequest="35" Source="back.svg" Clicked="Back" VerticalOptions="Center">
                 <ImageButton.Behaviors>
                     <mct:IconTintColorBehavior TintColor="White"/>
@@ -43,7 +51,15 @@
         </Grid>
         <ffImageLoading:CachedImage Grid.Row="0" Grid.RowSpan="2" Loaded="CachedImage_Loaded" Source="{Binding Model.Url}" Aspect="AspectFit"  />
         <ActivityIndicator  Grid.Row="0" ZIndex="5" Grid.RowSpan="2" IsRunning="{Binding Model.PhotoLoading}" VerticalOptions="Center" HorizontalOptions="Center" />
-        <VerticalStackLayout Grid.Row="1" VerticalOptions="End" Spacing="5" Margin="10" HorizontalOptions="Fill">
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="End" Spacing="5" Padding="10" HorizontalOptions="Fill">
+            <VerticalStackLayout.Background>
+                <LinearGradientBrush EndPoint="0,1">
+                    <GradientStop Color="Transparent"
+                          Offset="0.1"  />
+                    <GradientStop Color="#88000000"
+                          Offset="1.0" />
+                </LinearGradientBrush>
+            </VerticalStackLayout.Background>
             <Label  VerticalOptions="End" FontAttributes="Bold" TextColor="#FAFAFA" Text="{Binding Model.Title}" FontSize="Medium" IsVisible="{Binding Model.Title, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"/>
             <ScrollView MaximumHeightRequest="150" VerticalOptions="End" IsVisible="{Binding Model.Description, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
                 <Label  TextType="Html" TextColor="#FAFAFA" Text="{Binding Model.Description}"/>
