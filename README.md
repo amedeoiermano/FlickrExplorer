@@ -28,7 +28,9 @@ Applicazione che consente la ricerca di foto su Flickr tramite il set di api uff
 Eseguire l'app in modalità Release per un'esperienza più fluida
 
 Fonte icone: [SVG Repo](https://www.svgrepo.com/)
+
 Fonte immagini: [Storyset](https://storyset.com/)
+
 Logo app: Originale
 
 NB: Applicazione non testata su iOS per indisponibilità hardware
