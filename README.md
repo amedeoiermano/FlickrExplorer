@@ -27,6 +27,8 @@ Applicazione che consente la ricerca di foto su Flickr tramite il set di api uff
 
 Eseguire l'app in modalità Release per un'esperienza più fluida
 
+Per visualizzare la galleria di un utente, cliccare sul banner utente nel dettaglio di una foto
+
 Fonte icone: [SVG Repo](https://www.svgrepo.com/)
 
 Fonte immagini: [Storyset](https://storyset.com/)
