@@ -49,7 +49,7 @@
                 </ImageButton.Behaviors>
             </ImageButton>
         </Grid>
-        <ffImageLoading:CachedImage Grid.Row="0" Grid.RowSpan="2" Loaded="CachedImage_Loaded" Source="{Binding Model.Url}" Aspect="AspectFit"  />
+        <ffImageLoading:CachedImage Grid.Row="0" Grid.RowSpan="2" Source="{Binding Model.Url}" Aspect="AspectFit"  />
         <VerticalStackLayout Grid.Row="1" VerticalOptions="End" Spacing="5" Padding="10" HorizontalOptions="Fill">
             <VerticalStackLayout.Background>
                 <LinearGradientBrush EndPoint="0,1">
