@@ -85,11 +85,6 @@ namespace FlickrExplorer.Models
             get => _uploadDate;
             set => SetProperty(ref _uploadDate, value);
         }
-        public bool PhotoLoading
-        {
-            get => _photoLoading;
-            set => SetProperty(ref _photoLoading, value);
-        }
         /// <summary>
         /// Lista tag foto
         /// </summary>
@@ -113,7 +108,6 @@ namespace FlickrExplorer.Models
         /// <returns></returns>
         public async Task<GetPhotoInfoResponse> GetPhotoInfo()
         {
-            PhotoLoading = true;
             _cancellationTokenSource = new CancellationTokenSource();
             var resp = await ApiClient.Instance.GetPhotoInfo(Id, cts: _cancellationTokenSource);
             if (resp.Status == Status.Ok)
